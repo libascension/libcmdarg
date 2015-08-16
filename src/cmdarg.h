@@ -55,8 +55,8 @@ namespace cmdarg {
 	};
 
 	enum parseMode {
-		kInterpolate,
-		kStrict
+		kInterpolate = 0,
+		kStrict = 1
 	};
 	enum errMode {
 		kNone,
@@ -93,6 +93,7 @@ namespace cmdarg {
 		void config_min_args(unsigned n);
 		void config_min_base_args(int n);
 		void config_fail_if_no_arg(bool fail);
+		void config_parse_mode(parseMode mode);
 	private:
 		// FUNCTIONS ***********************
 		bool parse_opts_interpolate();
@@ -101,7 +102,6 @@ namespace cmdarg {
 		// VARIABLES ***********************
 		int m_argc;
 		char** m_argv;
-		parseMode mode;
 
 		errMode error;
 
