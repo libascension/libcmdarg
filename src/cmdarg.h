@@ -74,36 +74,40 @@ namespace cmdarg {
 	class cmdline {
 	public:
 		cmdline(int argc, char* argv[], parseMode mode=kInterpolate);
+		~cmdline();
 
 		// GET CMDLINE INFO ****************
-		std::vector<std::string> get_raw_cmdline() { return m_cmdLine; }
-		std::vector<option> get_opts();
-		std::vector<std::string> get_base_args();
+		std::vector<std::string> getRawCmdline() { return m_cmdLine; }
+		std::vector<option> getOpts();
+		std::vector<std::string> getBaseArgs();
 
-		bool option_exists(char opt);
-		bool option_exists(std::string opt);
+		bool optionExists(char opt);
+		bool optionExists(std::string opt);
+
+		errMode getError() { return m_error; }
 
 		// RUN CMDLINE OPERATIONS **********
-		bool parse_opts();
+		bool parse();
 
 		// MODIFY CMDLINE OBJECT ***********
-		bool import_opt_info(std::vector<optionInfo> optInfo);
+		bool importOptInfo(std::vector<optionInfo> optInfo);
 
 		// CMDLINE CONFIGURATION ***********
-		void config_min_args(unsigned n);
-		void config_min_base_args(int n);
-		void config_fail_if_no_arg(bool fail);
-		void config_parse_mode(parseMode mode);
+		void config (std::string key, std::string value);
+		void config (std::string key, int value);
+		void config (std::string key, bool value);
 	private:
 		// FUNCTIONS ***********************
-		bool parse_opts_interpolate();
-		bool parse_opts_strict();
+		bool parse_interpolate();
+		bool parse_strict();
+
+		void initConfig();
 
 		// VARIABLES ***********************
 		int m_argc;
 		char** m_argv;
 
-		errMode error;
+		errMode m_error;
 
 		std::vector<std::string> m_cmdLine;
 		std::vector<option> m_options;
